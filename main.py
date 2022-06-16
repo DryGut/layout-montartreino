@@ -5,31 +5,35 @@ from dbconfig import *
 root = Tk()
 root.title("Personal Trainer App")
 root.geometry('320x200')
+cadastro = Frame(root)
+treino = Frame(root)
 
+def cadastroAluno():
 
+  cadastro.grid()
+  e1 = Label(cadastro, text="Nome:").grid(row=0)
+  e2 = Label(cadastro, text="Idade:").grid(row=1)
+  e3 = Label(cadastro, text="Cpf:").grid(row=2)
+  e4 = Label(cadastro, text="E-mail:").grid(row=3)
+  e5 = Label(cadastro, text="Celular:").grid(row=4)
 
-e1 = Label(root, text="Nome:").grid(row=0)
-e2 = Label(root, text="Idade:").grid(row=1)
-e3 = Label(root, text="Cpf:").grid(row=2)
-e4 = Label(root, text="E-mail:").grid(row=3)
-e5 = Label(root, text="Celular:").grid(row=4)
+  e1 = Entry(cadastro)
+  e2 = Entry(cadastro)
+  e3 = Entry(cadastro)
+  e4 = Entry(cadastro)
+  e5 = Entry(cadastro)
 
-e1 = Entry(root)
-e2 = Entry(root)
-e3 = Entry(root)
-e4 = Entry(root)
-e5 = Entry(root)
-
-e1.grid(row=0, column=1)
-e2.grid(row=1, column=1)
-e3.grid(row=2, column=1)
-e4.grid(row=3, column=1)
-e5.grid(row=4, column=1)
+  e1.grid(row=0, column=1)
+  e2.grid(row=1, column=1)
+  e3.grid(row=2, column=1)
+  e4.grid(row=3, column=1)
+  e5.grid(row=4, column=1)
+  treino.grid_forget()
   
 def clicked():
   
   banco = Connect()
-
+  
   c = banco.conn.cursor()
   c.execute("""
             INSERT INTO alunos VALUES(
@@ -57,29 +61,31 @@ def clicked():
   e4.delete(0,"end")
   e5.delete(0,"end")
 
-btn = Button(root, text="Cadastrar", command=clicked)
+btn = Button(cadastro, text="Cadastrar", command=clicked)
 btn.grid(column=1, row=5)
 
 
 def montarTreino():
-  
-  f1 = Label(root, text="Superior:").grid(row=0)
-  f2 = Label(root, text="Inferior:").grid(row=1)
+
+  treino.grid()
+  f1 = Label(treino, text="Superior:").grid(row=0)
+  f2 = Label(treino, text="Inferior:").grid(row=1)
 
 
-  f1 = Entry(root)
-  f2 = Entry(root)
+  f1 = Entry(treino)
+  f2 = Entry(treino)
 
 
   f1.grid(row=0, column=1)
   f2.grid(row=1, column=1)
+  cadastro.grid_forget()
 
 
 menu = Menu(root)
 root.config(menu=menu)
 filemenu = Menu(menu)
 menu.add_cascade(label='File', menu=filemenu)
-filemenu.add_command(label='Novo Cadastro')
+filemenu.add_command(label='Novo Cadastro', command=cadastroAluno)
 filemenu.add_separator()
 filemenu.add_command(label='Montar Treino', command=montarTreino)
 filemenu.add_separator()
