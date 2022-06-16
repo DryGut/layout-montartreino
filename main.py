@@ -2,6 +2,7 @@ from tkinter import *
 from refatorar import *
 from dbconfig import *
 
+# inicia o App e outras funcionalidades
 root = Tk()
 root.title("Personal Trainer App")
 root.geometry('320x200')
@@ -9,6 +10,7 @@ cadastro = Frame(root)
 treino = Frame(root)
 
 def cadastroAluno():
+  """Aba para cadastro dos Clientes/Alunos"""
 
   cadastro.grid()
   e1 = Label(cadastro, text="Nome:").grid(row=0)
@@ -31,6 +33,7 @@ def cadastroAluno():
   treino.grid_forget()
   
 def clicked():
+  """Funcao para cadastrar os dados"""
   
   banco = Connect()
   
@@ -66,7 +69,8 @@ btn.grid(column=1, row=5)
 
 
 def montarTreino():
-
+  """Aba para montagem do treino"""
+  
   treino.grid()
   f1 = Label(treino, text="Superior:").grid(row=0)
   f2 = Label(treino, text="Inferior:").grid(row=1)
@@ -80,6 +84,8 @@ def montarTreino():
   f2.grid(row=1, column=1)
   cadastro.grid_forget()
 
+# cria o menu para acesso ao sistema de cadastro ou
+# montagem do treino
 
 menu = Menu(root)
 root.config(menu=menu)
