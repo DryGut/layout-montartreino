@@ -11,26 +11,15 @@ class ClientesDb(object):
     self.cpf = cpf
     self.email = email
     self.celular = celular
-    self.criado_em = datetime.datetime.now().isoformat(" ")
     
 
-  def inserirDados(self, *dados):
+  def inserirDados(self):
         """inserindo dados dos alunos"""
 
         banco = Connect()
         try:
           c = banco.conn.cursor()
-          c.execute("""
-                    INSERT INTO alunos (
-                    nome, 
-                    idade, 
-                    cpf, 
-                    email, 
-                    celular, 
-                    criado_em) 
-                    VALUES(?, ?, ?, ?, ?, ?)""",
-                    (self.nome, self.idade, self.cpf, 
-                     self.email, self.celular, self.criado_em))
+          c.execute("INSERT INTO alunos (nome, idade, cpf, email, celular) VALUES ('" + self.nome + "', '" + self.idade + "', '" + self.cpf + "', '" + self.email + "', '" + self.celular + "')")
           
           banco.conn.commit()
           c.close()
@@ -61,7 +50,7 @@ class ClientesDb(object):
       return "Atualizacao nao Realizada"
 
 
-  def deletarDdados(self):
+  def deletarDados(self):
     """deleta os dados existentes"""
 
     banco = Connect()
