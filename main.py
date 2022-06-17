@@ -2,7 +2,7 @@ from tkinter import *
 from refatorar import *
 from dbconfig import *
 
-# inicia o App e outras funcionalidades
+##### Inicia o App e outras funcionalidades #####
 
 class App():
 
@@ -31,6 +31,7 @@ class App():
     self.slave.grid()
 
     
+##### Cria o layout do sistema de cadastro #####
 
   def cadastroAluno(self):
     """Aba Novos Cadastros"""
@@ -75,7 +76,9 @@ class App():
     self.txtcelular['width'] = 25
     self.txtcelular['font'] = self.fonte
     self.txtcelular.grid(row=5, column=1)
-
+    
+    ##### falta ajustar os botões #####
+    
     self.bntInserir = Button(self.master, text='Inserir', font=self.fonte, width=5)
     self.bntInserir['command'] = self.fazerCadastro
     self.bntInserir.grid(column=1, row=6)
@@ -89,6 +92,8 @@ class App():
     self.btnExcluir.grid(column=3, row=6)
 
     self.slave.grid_forget()
+
+##### Cria o Layout para montagem dos treinos #####
 
   def montarTreino(self):
     """Aba Montar Treino"""
@@ -111,8 +116,11 @@ class App():
     
     self.master.grid_forget()
 
+##### Cria as funçoes para manipulação dos cadastros #####
+    
   def fazerCadastro(self):
-
+    """Realiza o Cadastro"""
+    
     c = ClientesDb()
 
     c.nome = self.txtnome.get()
@@ -130,6 +138,7 @@ class App():
     self.txtcelular.delete(0, END)
 
   def atualizarCadastro(self):
+    """Atualiza o Cadastro"""
 
     c = ClientesDb()
 
@@ -149,6 +158,7 @@ class App():
     self.txtcelular.delete(0, END)
     
   def deletarCadastro(self):
+    """Deleta Registro Existente"""
 
     c = ClientesDb()
 
@@ -167,6 +177,8 @@ root = Tk()
 app = App(root)
 root.title("Personal Trainer App")
 root.geometry('520x300')
+
+##### Cria o menu de navegação do Sistema #####
 
 menu = Menu(root)
 root.config(menu=menu)
