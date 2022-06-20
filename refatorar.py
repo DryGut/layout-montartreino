@@ -35,13 +35,7 @@ class ClientesDb(object):
     banco = Connect()
     try:
       c = banco.conn.cursor()
-      c.execute(""" UPDATE alunos SET 
-                nome = ?, 
-                idade = ?, 
-                email = ?, 
-                celular = ? 
-                WHERE id = ? """,
-               (self.nome, self.idade, self.email, self.celular, self.id))
+      c.execute("UPDATE alunos SET nome = '" + self.nome + "', idade = '" + self.idade + "', email = '" + self.email + "', celular = '" + self.celular + "' WHERE id = " + self.id + " ")
       banco.conn.commit()
       c.close()
 
@@ -56,10 +50,7 @@ class ClientesDb(object):
     banco = Connect()
     try:
       c = banco.conn.cursor()
-      c.execute("""
-                DELETE FROM alunos
-                WHERE id = ?""",
-               (self.id))
+      c.execute("DELETE FROM alunos WHERE id = " + self.id +" ")
       banco.conn.commit()
       c.close()
 
@@ -67,22 +58,20 @@ class ClientesDb(object):
     except:
       return "Remocao nao Realizada"
 
-  def localizarDados(self,id):
+  def localizarDados(self, id):
     """ buscando dados no BD"""
     
     banco = Connect()
     try:
       c = banco.conn.cursor
-      c.execute("""SELECT * FROM alunos WHERE id = ?
-                """, (self.id))
+      c.execute("SELECT * FROM alunos WHERE id = " + id + " ")
 
       for linha in c:
-        self.id = linha[0]
-        self.nome = linha[1]
-        self.idade = linha[2]
-        self.cpf = linha[3]
-        self.email = linha[4]
-        self.celular = linha[5]
+        self.nome = linha[0]
+        self.idade = linha[1]
+        self.cpf = linha[2]
+        self.email = linha[3]
+        self.celular = linha[4]
 
         c.close()
 
@@ -90,4 +79,3 @@ class ClientesDb(object):
     except:
       return "Cliente nao Encontrado"
 
-      
