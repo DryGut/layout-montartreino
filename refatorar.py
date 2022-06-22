@@ -1,8 +1,8 @@
-from dbconfig import *
+from dbconfig import Connect
 
 class ClientesDb(object):
 
-  def __init__(self, id = 0, nome = "", idade = "", cpf = "", email = "", celular = "", criado_em = ""):
+  def __init__(self, id = 0, nome = "", idade = "", cpf = "", email = "", celular = ""):
 
     self.info = {}
     self.id = id
@@ -50,7 +50,7 @@ class ClientesDb(object):
     banco = Connect()
     try:
       c = banco.conn.cursor()
-      c.execute("DELETE FROM alunos WHERE id = " + self.id +" ")
+      c.execute("DELETE FROM alunos WHERE id = " + self.id + " ")
       banco.conn.commit()
       c.close()
 
@@ -63,19 +63,32 @@ class ClientesDb(object):
     
     banco = Connect()
     try:
-      c = banco.conn.cursor
+      c = banco.conn.cursor()
       c.execute("SELECT * FROM alunos WHERE id = " + id + " ")
 
       for linha in c:
-        self.nome = linha[0]
-        self.idade = linha[1]
-        self.cpf = linha[2]
-        self.email = linha[3]
-        self.celular = linha[4]
+        self.id = linha[0]
+        self.nome = linha[1]
+        self.idade = linha[2]
+        self.cpf = linha[3]
+        self.email = linha[4]
+        self.celular = linha[5]
+      banco.conn.commit()
+      c.close()
 
-        c.close()
-
-        return "Busca Realizada"
+      return "Busca Realizada"
     except:
       return "Cliente nao Encontrado"
 
+  def novo_cadastro(self, nome):
+    """localiza cadastro"""
+    
+    banco = Connect()
+    try:
+      n = banco.conn.cursor()
+      n.execute("SELECT * FROM alunos WHERE nome = " + nome + " ")
+      banco.conn.commit()
+      n.close()
+      return list(n.fetchone())
+    except:
+      return "deu merda"

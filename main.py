@@ -11,7 +11,8 @@ class App():
     
     self.superior = []
     self.inferior = []
-   
+    self.nomedoaluno = []
+    
     self.fonte = ("Verdana", "10")
     
     self.master = Frame(master)
@@ -30,13 +31,8 @@ class App():
  
     self.slave = Frame(slave)
     self.slave['padx'] = 20
-    self.slave['pady'] = 5
+    self.slave['pady'] = 10
     self.slave.grid()
-
-    
-    self.lblstatus = Label(self.c8, text="")
-    self.lblstatus['font'] = 'Verdana', '9', 'italic'
-    self.lblstatus.grid(row=7)
 
     
 ##### Cria o layout do sistema de cadastro #####
@@ -48,7 +44,7 @@ class App():
     self.c7.grid()
     
     self.title = Label(self.master, text='Cadastro de Novos Alunos')
-    self.title['pady'] = 15
+    self.title['pady'] = 10
     self.title['font'] = ('Calibre', '10', 'bold')
     self.title.grid(row=0, column=1)
 
@@ -94,24 +90,28 @@ class App():
     self.txtcelular['width'] = 25
     self.txtcelular['font'] = self.fonte
     self.txtcelular.grid(row=6, column=1)
+
+    self.lblstatus = Label(self.master, text="")
+    self.lblstatus['font'] = 'Verdana', '9', 'italic'
+    self.lblstatus.grid(row=7, column=1)
     
     ##### falta ajustar os botões #####
     
     self.btnBuscar = Button(self.c7, text='Buscar', font=self.fonte, width=5)
     self.btnBuscar['command'] = self.localizarCadastro
-    self.btnBuscar.grid(column=0, row=7)
+    self.btnBuscar.grid(column=1, row=7)
     
     self.btnInserir = Button(self.c7, text='Inserir', font=self.fonte, width=5)
     self.btnInserir['command'] = self.fazerCadastro
-    self.btnInserir.grid(column=1, row=7)
+    self.btnInserir.grid(column=2, row=7)
 
     self.btnAlterar = Button(self.c7, text='Alterar', font=self.fonte, width=5)
     self.btnAlterar['command'] = self.atualizarCadastro
-    self.btnAlterar.grid(column=2, row=7)
+    self.btnAlterar.grid(column=3, row=7)
 
     self.btnExcluir = Button(self.c7, text='Excluir', font=self.fonte, fg='red', width=5)
     self.btnExcluir['command'] = self.deletarCadastro
-    self.btnExcluir.grid(column=3, row=7)
+    self.btnExcluir.grid(column=4, row=7)
 
     self.slave.grid_forget()
 
@@ -121,33 +121,44 @@ class App():
     """Aba Montar Treino"""
 
     self.slave.grid()
+
+    self.lblnomedoaluno = Label(self.slave, text='Nome do Aluno:', font=self.fonte, width=15)
+    self.lblnomedoaluno.grid(row=0)
+    self.txtnomedoaluno = Entry(self.slave)
+    self.txtnomedoaluno['width'] = 25
+    self.txtnomedoaluno['font'] = self.fonte
+    self.txtnomedoaluno.grid(row=0, column=1)
+
+    self.btnnomedoaluno = Button(self.slave, text='buscar', font=self.fonte, width=5)
+    self.btnnomedoaluno['command'] = self.buscarAluno
+    self.btnnomedoaluno.grid(row=0, column=3)
     
     self.lblsuperior = Label(self.slave, text='Superior:', 
                              font=self.fonte, width=10)
-    self.lblsuperior.grid(row=0)
+    self.lblsuperior.grid(row=1)
     self.txtsuperior = Entry(self.slave)
     self.txtsuperior['width'] = 25
     self.txtsuperior['font'] = self.fonte
-    self.txtsuperior.grid(row=0, column=1)
+    self.txtsuperior.grid(row=1, column=1)
 
     self.btnsuperior = Button(self.slave, text='inserir', 
                               font=self.fonte, width=5)
     self.btnsuperior['command'] = self.montarSuperior
-    self.btnsuperior.grid(row=0, column=3)
+    self.btnsuperior.grid(row=1, column=3)
 
     
     self.lblinferior = Label(self.slave, text='Inferior:', 
                              font=self.fonte, width=10)
-    self.lblinferior.grid(row=1)
+    self.lblinferior.grid(row=2)
     self.txtinferior = Entry(self.slave)
     self.txtinferior['width'] = 25
     self.txtinferior['font'] = self.fonte
-    self.txtinferior.grid(row=1, column=1)
+    self.txtinferior.grid(row=2, column=1)
     
     self.btninferior = Button(self.slave, text='inserir', 
                               font=self.fonte, width=5)
     self.btninferior['command'] = self.montarInferior
-    self.btninferior.grid(row=1, column=3)
+    self.btninferior.grid(row=2, column=3)
 
     self.btnExibir = Button(self.slave, text='Exibir', 
                             font=self.fonte, width=5)
@@ -221,7 +232,7 @@ class App():
     id = self.txtid.get()
 
     self.lblstatus["text"] = c.localizarDados(id)
-    
+
     self.txtid.delete(0, END)
     self.txtid.insert(INSERT, c.id)
     
@@ -263,16 +274,37 @@ class App():
 
   def exibirTreino(self):
     """exibir o treino"""
-
-    print("-" * 30 + "\nSuperior:\n")
+    
+    c = ClientesDb()
+    
+    top = Toplevel()
+    top.title('Treino do Dia')
+    top.geometry('250x250')
+    
+    for i in self.nomedoaluno:
+      if i in c.novo_cadastro(i):
+        print(c.novo_cadastro(i))
+    
+    label1 = Label(top, text="-" * 30 + "\nSuperior:\n")
+    label1.grid(row=1, column=2)
     for item in self.superior:
-      print(item)
+      label2 = Label(top, text=item)
+      label2.grid(row=2, column=2)
 
-    print("-" * 30 + "\nInferior:\n")
+    label3 = Label(top, text="-" * 30 + "\nInferior:\n")
+    label3.grid(row=3, column=2)
     for item in self.inferior:
-      print(item)
-    print("-" * 30)
+      label4 = Label(top, text=item)
+      label4.grid(row=4, column=2)
+    label5 = Label(top, text="-" * 30)
+    label5.grid(row=5, column=2)
 
+  def buscarAluno(self):
+    """formatar treino com nome do aluno"""
+
+    n = self.txtnomedoaluno.get()
+    self.nomedoaluno.append(n)
+    self.txtnomedoaluno.delete(0, END)
 
 root = Tk()
 app = App(root)
