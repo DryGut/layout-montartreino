@@ -125,7 +125,7 @@ class App():
     self.lblnomedoaluno = Label(self.slave, text='Nome do Aluno:', font=self.fonte, width=15)
     self.lblnomedoaluno.grid(row=0)
     self.txtnomedoaluno = Entry(self.slave)
-    self.txtnomedoaluno['width'] = 25
+    self.txtnomedoaluno['width'] = 20
     self.txtnomedoaluno['font'] = self.fonte
     self.txtnomedoaluno.grid(row=0, column=1)
 
@@ -137,7 +137,7 @@ class App():
                              font=self.fonte, width=10)
     self.lblsuperior.grid(row=1)
     self.txtsuperior = Entry(self.slave)
-    self.txtsuperior['width'] = 25
+    self.txtsuperior['width'] = 20
     self.txtsuperior['font'] = self.fonte
     self.txtsuperior.grid(row=1, column=1)
 
@@ -151,7 +151,7 @@ class App():
                              font=self.fonte, width=10)
     self.lblinferior.grid(row=2)
     self.txtinferior = Entry(self.slave)
-    self.txtinferior['width'] = 25
+    self.txtinferior['width'] = 20
     self.txtinferior['font'] = self.fonte
     self.txtinferior.grid(row=2, column=1)
     
@@ -161,7 +161,7 @@ class App():
     self.btninferior.grid(row=2, column=3)
 
     self.btnExibir = Button(self.slave, text='Exibir', 
-                            font=self.fonte, width=5)
+                            font=self.fonte, width=10)
     self.btnExibir['command'] = self.exibirTreino
     self.btnExibir.grid(column=1, row=7)
 
@@ -309,7 +309,7 @@ class App():
 root = Tk()
 app = App(root)
 root.title("Personal Trainer App")
-root.geometry('520x270')
+root.geometry('450x290')
 
 ##### Cria o menu de navegação do Sistema #####
 
