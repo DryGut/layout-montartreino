@@ -6,7 +6,7 @@ from dbconfig import *
 
 class App():
 
-  def __init__(self, master=None, slave=None):
+  def __init__(self, master=None, child=None):
     """inicializa o App"""
     
     self.superior = []
@@ -29,12 +29,11 @@ class App():
     self.c8['pady'] = 15
     self.c8.grid()
  
-    self.slave = Frame(slave)
-    self.slave['padx'] = 20
-    self.slave['pady'] = 10
-    self.slave.grid()
+    self.child = Frame(child)
+    self.child['padx'] = 20
+    self.child['pady'] = 10
+    self.child.grid()
 
-    
 ##### Cria o layout do sistema de cadastro #####
 
   def cadastroAluno(self):
@@ -95,7 +94,7 @@ class App():
     self.lblstatus['font'] = 'Verdana', '9', 'italic'
     self.lblstatus.grid(row=7, column=1)
     
-    ##### falta ajustar os botões #####
+##### Botões para manipulação dos cadastros #####
     
     self.btnBuscar = Button(self.c7, text='Buscar', font=self.fonte, width=5)
     self.btnBuscar['command'] = self.localizarCadastro
@@ -113,54 +112,54 @@ class App():
     self.btnExcluir['command'] = self.deletarCadastro
     self.btnExcluir.grid(column=4, row=7)
 
-    self.slave.grid_forget()
+    self.child.grid_forget()
 
 ##### Cria o Layout para montagem dos treinos #####
 
   def montarTreino(self):
     """Aba Montar Treino"""
 
-    self.slave.grid()
+    self.child.grid()
 
-    self.lblnomedoaluno = Label(self.slave, text='Nome do Aluno:', font=self.fonte, width=15)
+    self.lblnomedoaluno = Label(self.child, text='Nome do Aluno:', font=self.fonte, width=15)
     self.lblnomedoaluno.grid(row=0)
-    self.txtnomedoaluno = Entry(self.slave)
+    self.txtnomedoaluno = Entry(self.child)
     self.txtnomedoaluno['width'] = 20
     self.txtnomedoaluno['font'] = self.fonte
     self.txtnomedoaluno.grid(row=0, column=1)
 
-    self.btnnomedoaluno = Button(self.slave, text='buscar', font=self.fonte, width=5)
+    self.btnnomedoaluno = Button(self.child, text='buscar', font=self.fonte, width=5)
     self.btnnomedoaluno['command'] = self.buscarAluno
     self.btnnomedoaluno.grid(row=0, column=3)
     
-    self.lblsuperior = Label(self.slave, text='Superior:', 
+    self.lblsuperior = Label(self.child, text='Superior:', 
                              font=self.fonte, width=10)
     self.lblsuperior.grid(row=1)
-    self.txtsuperior = Entry(self.slave)
+    self.txtsuperior = Entry(self.child)
     self.txtsuperior['width'] = 20
     self.txtsuperior['font'] = self.fonte
     self.txtsuperior.grid(row=1, column=1)
 
-    self.btnsuperior = Button(self.slave, text='inserir', 
+    self.btnsuperior = Button(self.child, text='inserir', 
                               font=self.fonte, width=5)
     self.btnsuperior['command'] = self.montarSuperior
     self.btnsuperior.grid(row=1, column=3)
 
     
-    self.lblinferior = Label(self.slave, text='Inferior:', 
+    self.lblinferior = Label(self.child, text='Inferior:', 
                              font=self.fonte, width=10)
     self.lblinferior.grid(row=2)
-    self.txtinferior = Entry(self.slave)
+    self.txtinferior = Entry(self.child)
     self.txtinferior['width'] = 20
     self.txtinferior['font'] = self.fonte
     self.txtinferior.grid(row=2, column=1)
     
-    self.btninferior = Button(self.slave, text='inserir', 
+    self.btninferior = Button(self.child, text='inserir', 
                               font=self.fonte, width=5)
     self.btninferior['command'] = self.montarInferior
     self.btninferior.grid(row=2, column=3)
 
-    self.btnExibir = Button(self.slave, text='Exibir', 
+    self.btnExibir = Button(self.child, text='Exibir', 
                             font=self.fonte, width=10)
     self.btnExibir['command'] = self.exibirTreino
     self.btnExibir.grid(column=1, row=7)
@@ -169,7 +168,7 @@ class App():
     self.master.grid_forget()
     self.c7.grid_forget()
 
-##### Cria as funçoes para manipulação dos cadastros #####
+##### Cria as funções para manipulação dos cadastros #####
     
   def fazerCadastro(self):
     """Realiza o Cadastro"""
@@ -251,7 +250,8 @@ class App():
     self.txtcelular.delete(0, END)
     self.txtcelular.insert(INSERT,c.celular)
 
-
+##### Funcoes para exibição dos treinos #####
+    
   def montarInferior(self):
     """montagem do treino"""
 
@@ -287,15 +287,18 @@ class App():
     
     label1 = Label(top, text="-" * 30 + "\nSuperior:\n")
     label1.grid(row=1, column=2)
+    
     for item in self.superior:
       label2 = Label(top, text=item)
       label2.grid(row=2, column=2)
 
     label3 = Label(top, text="-" * 30 + "\nInferior:\n")
     label3.grid(row=3, column=2)
+    
     for item in self.inferior:
       label4 = Label(top, text=item)
       label4.grid(row=4, column=2)
+    
     label5 = Label(top, text="-" * 30)
     label5.grid(row=5, column=2)
 
@@ -305,6 +308,8 @@ class App():
     n = self.txtnomedoaluno.get()
     self.nomedoaluno.append(n)
     self.txtnomedoaluno.delete(0, END)
+
+##### Pagina inicial do App #####
 
 root = Tk()
 app = App(root)
